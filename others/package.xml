@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>ros_study_others</name>
+  <version>0.0.0</version>
+  <description>The ros_study_others package</description>
+
+  <maintainer email="tnakamura.amsl@gmail.com">Toshiki Nakamura</maintainer>
+
+  <license>TODO</license>
+
+  <depend>catkin</depend>
+
+  <depend>roscpp</depend>
+  <depend>std_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>tf2</depend>
+</package>

@@ -1,0 +1,51 @@
+# 車輪ロボットをシミュレートする
+## link-joint構造
+- `fixed`
+    - 2つのlinkを固定で接続する
+- `revolute`
+    - 2つのlinkは軸を中心に回転する
+## 衝突演算パラメータ設定
+- `friction`
+    - 摩擦係数の設定
+    - 基本的にmu=mu2にする
+    - ボールキャスタｎなどｎ滑るものは0.01~0.1程度
+    - 動輪のタイヤなどのグリップするものなら0.5程度
+- `contact`
+    - 表面の硬さに関するパラメータ
+    - kp
+        - 表面の「めり込み」についての反力
+        - 反力[N]=めり込み量[m] x kp[N/m]
+        - 小型ロボットではkp=1e5~7程度
+    - kd
+        - 速度に関する反力
+        - 影響はそこまで大きくないので基本1にする
+    - これらのSDFの要素は[SDFフォーマットリファレンス](http://sdformat.org/spec?ver=1.9)に載っている
+## プラグインの設定
+- Gazebo Modelプラグインは`<model>`タグの直下に書く
+- 例)
+    - diff_driveプラグイン
+        - 差動二輪のタイヤを回すプラグイン
+- ROSトピックの受信
+    - `libgazebo_ros_diff_drive.so`
+        - Twistを受けてタイヤを回す設定
+        - 駆動側
+            - commandTopic: Twistのトピック名
+            - leftJoint: 左タイヤのjoint名
+            - wheelSeparation: 左右輪の間の距離
+            - wheelDiameter: 車輪の直径
+            - leftJoint: 左タイヤのjoint名
+            - rightJoint: 右タイヤのjoint名
+            - wheelAcceleration: タイヤの最大加速度
+            - wheelTorque: タイヤの最大トルク
+        - odom出力側
+            - odometryTopic: Odomトピック名
+            - updateRate: 出力レート 
+            - odometryFrame: odomフレーム名
+            - robotBaseFrame: baseフレーム名
+            - odometrySource: 出力される位置のタイプ(encoder or world)
+        - joint_state出力側
+            - publishWheelJointState: 出力enable
+        - tf出力側
+            - publishOdomTF: jointのtfの出力enable
+            - publishWheelTF: odom->baseのtfの出力enable
+            - publishTf: tfの出力enable
