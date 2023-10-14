@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(ros_study_others)
+project(ros_study)
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp
